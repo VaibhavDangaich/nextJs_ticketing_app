@@ -34,5 +34,14 @@
   p{
     @apply text-sm text-[#f1f3f5];
   }
+  form{
+    @apply rounded-xl p-4;
+  }
+  label{
+    @apply mt-4;
+  }
+  input,select,textarea{
+    @apply rounded m-1 bg-[#47566a] p-1;
+  }
 
 }
