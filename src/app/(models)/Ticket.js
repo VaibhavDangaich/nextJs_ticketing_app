@@ -1,15 +1,5 @@
-import mongoose,{Schema } from "mongoose";
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-}).then(() => {
-  console.log("Connected to MongoDB");
-}
-).catch((err) => {
-  console.error("MongoDB connection error:", err);
-});
+// (models)/Ticket.js
+import mongoose, { Schema } from "mongoose";
 
 const ticketSchema = new Schema({
     title: {
@@ -22,17 +12,14 @@ const ticketSchema = new Schema({
     },
     category: {
         type: String,
-   
     },
     priority: {
         type: Number,
-       
     },
-    progress:{
+    progress: {
         type: Number,
-       
     },
-    status:{
+    status: {
         type: String,
     },
     createdAt: {
@@ -43,11 +30,11 @@ const ticketSchema = new Schema({
         type: Date,
         default: Date.now,
     },
-    active:{
+    active: {
         type: Boolean,
         default: true,
     }
-
 });
-const Ticket=mongoose.models.Ticket || mongoose.model("Ticket", ticketSchema);
+
+const Ticket = mongoose.models.Ticket || mongoose.model("Ticket", ticketSchema);
 export default Ticket;
