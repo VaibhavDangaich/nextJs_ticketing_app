@@ -1,8 +1,13 @@
-import TicketCard from "./{components}/TicketCard"
+import TicketCard from "./(components)/TicketCard"
 
 function Dashboard() {
   return (
-    <div><TicketCard></TicketCard></div>
+    <div className="p-3 lg:grid grid-cols-2 xl:grid-cols-4">
+    <TicketCard></TicketCard>
+    <TicketCard></TicketCard>
+    <TicketCard></TicketCard>
+    <TicketCard></TicketCard>
+    </div>
   )
 }
 
