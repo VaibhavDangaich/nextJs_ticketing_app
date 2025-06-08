@@ -1,7 +1,8 @@
+import TicketCard from "./{components}/TicketCard"
 
 function Dashboard() {
   return (
-    <div>Dashboard</div>
+    <div><TicketCard></TicketCard></div>
   )
 }
 

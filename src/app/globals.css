@@ -1,3 +1,14 @@
+@import "tailwindcss";
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.icon{
+  color: red;
+  
+}
+.icon:hover{
+  cursor: pointer;
+  color: lightcoral;
+}
