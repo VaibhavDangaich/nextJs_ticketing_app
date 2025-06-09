@@ -41,3 +41,15 @@ export async function POST(req) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
+
+export async function GET() { 
+    await connectDB();
+    try {
+        console.log("GET /api/Tickets called");
+        const tickets = await Ticket.find();
+        return NextResponse.json(tickets, { status: 200 });
+    } catch (err) {
+        console.error("Error in GET /api/Tickets:", err);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}
