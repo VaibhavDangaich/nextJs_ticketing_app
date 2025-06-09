@@ -4,7 +4,8 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
-function TicketForm() {
+function TicketForm({ticket}) {
+    const EDITMODE = ticket._id === "new" ? false : true;
     const router = useRouter();
     const startingTicketData = {
         title: "",
@@ -14,6 +15,16 @@ function TicketForm() {
         status: "not started",
         category: "software issue"
     };
+    if (EDITMODE) {
+        startingTicketData.title=ticket.title
+        startingTicketData.description=ticket.description
+        startingTicketData.priority=ticket.priority
+        startingTicketData.progress=ticket.progress
+        startingTicketData.status=ticket.status
+        startingTicketData.category=ticket.category
+        
+    }
+
 
     const [formData, setFormData] = useState(startingTicketData);
     const [message, setMessage] = useState(""); // State for displaying messages
@@ -77,7 +88,9 @@ function TicketForm() {
     return (
         <div className='flex justify-center p-4 sm:p-6 lg:p-8'> {/* Added padding for better layout */}
             <form className='flex flex-col gap-4 w-full sm:w-3/4 lg:w-1/2 p-6 bg-white shadow-lg rounded-xl' onSubmit={handleSubmit}>
-                <h3 className='text-2xl font-bold mb-4 text-center text-gray-800'>Create Your Ticket</h3>
+                <h3 className='text-2xl font-bold mb-4 text-center text-gray-800'>{
+                    EDITMODE ? "Edit Ticket" : "Create New Ticket"
+                 }</h3>
 
                 <label htmlFor='title' className='text-sm font-medium text-gray-700'>Title</label>
                 <input

@@ -3,6 +3,7 @@ import DeleteBlock from './DeleteBlock'
 import PriorityDisplay from './PriorityDisplay'
 import ProgressDisplay from './ProgressDisplay'
 import StatusDisplay from './StatusDisplay'
+import Link from 'next/link'
 
 function TicketCard({ ticket }) {
   const timeStamp = (timestamp) => {
@@ -24,9 +25,12 @@ function TicketCard({ ticket }) {
     <div className='flex flex-col gap-3 bg-[#47566a] hover:bg-[#4f5e74] rounded-md shadow-lg p-3 m-2'>
     <div className='flex mb-3 justify-between'>
      <PriorityDisplay priority={ticket.priority}></PriorityDisplay>
-        <DeleteBlock></DeleteBlock>
+        <DeleteBlock id={ticket._id}></DeleteBlock>
 
-    </div>
+      </div>
+      <Link href={`/TicketPage/${ticket._id}/`}>
+
+     
       <h4>{ticket.title}</h4>
     <hr className=' h-px border-0 bg-[#2b3441] mb-2'></hr>
       <p className=' whitespace-pre-wrap'>{ticket.description}</p>
@@ -44,7 +48,8 @@ function TicketCard({ ticket }) {
      </div>
        
 
-       </div>
+        </div>
+      </Link>
        
     </div>
   )
