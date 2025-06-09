@@ -49,21 +49,18 @@ function TicketForm({ticket}) {
             priority: Number(formData.priority),
             progress: Number(formData.progress),
         };
-
-        try {
-            const res = await fetch("/api/Tickets", {
-                method: "POST",
+        if (EDITMODE) {
+            const res = await fetch(`/api/Tickets/${ticket._id}`, {
+                method: "PUT",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({ formData: cleanedFormData }),
             });
-
             const data = await res.json();
-
             if (!res.ok) {
                 console.error("Server error response:", data);
-                setMessage(`Failed to create ticket: ${data.error || "Unknown error"}`);
+                setMessage(`Failed to update ticket: ${data.error || "Unknown error"}`);
                 // If it's a validation error, display details
                 if (data.details && Array.isArray(data.details)) {
                     data.details.forEach(detail => {
@@ -72,17 +69,52 @@ function TicketForm({ticket}) {
                 }
                 return;
             }
-
-            console.log("Ticket created successfully");
-            setMessage("Ticket created successfully!");
+            console.log("Ticket updated successfully");
+            setMessage("Ticket updated successfully!");
             router.refresh();
             router.push("/");
             setFormData(startingTicketData);
-
-        } catch (fetchError) {
-            console.error("Fetch error:", fetchError);
-            setMessage("Network error or unable to connect to server.");
+            
         }
+        else {
+            try {
+                const res = await fetch("/api/Tickets", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({ formData: cleanedFormData }),
+                });
+
+                const data = await res.json();
+
+                if (!res.ok) {
+                    console.error("Server error response:", data);
+                    setMessage(`Failed to create ticket: ${data.error || "Unknown error"}`);
+                    // If it's a validation error, display details
+                    if (data.details && Array.isArray(data.details)) {
+                        data.details.forEach(detail => {
+                            setMessage(prev => prev + `\n- ${detail.path}: ${detail.message}`);
+                        });
+                    }
+                    return;
+                }
+
+                console.log("Ticket created successfully");
+                setMessage("Ticket created successfully!");
+               
+
+            } catch (fetchError) {
+                console.error("Fetch error:", fetchError);
+                setMessage("Network error or unable to connect to server.");
+            }
+            router.refresh();
+            router.push("/");
+            setFormData(startingTicketData);
+            
+        }
+        
+
     };
 
     return (
@@ -172,7 +204,7 @@ function TicketForm({ticket}) {
                 <input
                     type='submit'
                     className='mt-6 w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-lg font-medium text-white bg-blue-700 hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 cursor-pointer transition duration-150 ease-in-out'
-                    value="Create Ticket"
+                    value={EDITMODE ? "Edit Ticket" : "Create New Ticket"}
                 />
 
                 {message && (

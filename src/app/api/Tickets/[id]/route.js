@@ -32,3 +32,22 @@ export async function DELETE(req, { params }) {
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
+export async function PUT(req, { params }) {
+    try {
+        const { id } = params;
+        await connectDB();
+        const body = await req.json();
+        const ticketData = body.formData;
+        const updateTicketData = await Ticket.findByIdAndUpdate(id, {
+            ...ticketData,
+
+        });
+        return NextResponse.json({ message: "Ticket Updated" }, { status: 200 });
+
+    }
+
+    catch (err) {
+        console.error("Error in PUT /api/Tickets:", err);
+        return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
+    }
+}
